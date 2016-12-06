@@ -1,6 +1,5 @@
 from bs4 import BeautifulSoup
 import requests
-import urllib2
 import shutil
 
 urls = []
