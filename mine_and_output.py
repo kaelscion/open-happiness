@@ -3,7 +3,7 @@ import requests
 import shutil
 
 urls = []
-query = 'orange kitty'
+query = 'puppies'
 
 class data_miner:
 
@@ -22,7 +22,7 @@ class data_miner:
     def download_files(self, query):
         number = 1
         for item in urls:
-            with open('happy-images/' + query + str(number) + '.jpg', 'wb') as out_file:
+            with open('static/happy-images/' + query + str(number) + '.jpg', 'wb') as out_file:
                 req = requests.get(item, stream=True)
                 shutil.copyfileobj(req.raw, out_file)
                 number += 1
