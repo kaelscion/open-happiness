@@ -16,7 +16,6 @@ class Positive(Base):
     __tablename__ = 'positive_categories'
     id = Column(Integer, primary_key=True)
     category = Column(String(250), nullable=False)
-    category_id = Column(Integer, ForeignKey('category.id'))
     
 engine = create_engine('sqlite:///happiness.db')
 
