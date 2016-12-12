@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 from app import db, models
+import time
 import requests
 import shutil
 import random
@@ -35,7 +36,8 @@ class data_miner:
     def download_files(self, query):
         number = 1
         for item in self.urls:
-            with open('app/static/happy-images/' + query + str(number) + '.jpg', 'wb') as out_file:
+            image_name = '%s%s%s.jpg' % (query, time.strftime("%m%y%I%M"), str(number))
+            with open('app/static/happy-images/' + image_name, 'wb') as out_file:
                 req = requests.get(item, stream=True)
                 shutil.copyfileobj(req.raw, out_file)
                 number += 1
