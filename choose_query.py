@@ -1,9 +1,6 @@
 from bs4 import BeautifulSoup
 from app import db, models
-import time
-import requests
-import shutil
-import random
+import time, os, requests, shutil, random
 
 class data_miner:
 
@@ -35,9 +32,11 @@ class data_miner:
 
     def download_files(self, query):
         number = 1
+        new_directory = 'app/static/happy-images/%s%s' % (query, time.strftime("%m%y%I%M"))
+        if not os.path.exists(new_directory):
+            os.makedirs(new_directory)
         for item in self.urls:
-            image_name = '%s%s%s.jpg' % (query, time.strftime("%m%y%I%M"), str(number))
-            with open('app/static/happy-images/' + image_name, 'wb') as out_file:
+            with open('%s/%s%s.jpg' % (new_directory, query, str(number) ), 'wb') as out_file:
                 req = requests.get(item, stream=True)
                 shutil.copyfileobj(req.raw, out_file)
                 number += 1

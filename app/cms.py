@@ -2,12 +2,21 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 import os
 
+current_images = []
+new_images = []
+
 class load_content:
 
     def __init__(self, html_file):
         self.html_file = html_file
 
-    def load_images(self):
+    def load_current_images(self):
+        html_doc = open(self.html_file, "r+")
+        soup = BeautifulSoup(html_doc, "html5lib")
+        for image in soup.find_all('img'):
+            current_images.append(image.attrs['src'])
+
+    def load_new_images(self):
         html_doc = open(self.html_file, "r+")
         soup = BeautifulSoup(html_doc, "html5lib")
         div_happy_images = soup.find('div', {'class' : 'row'})
@@ -18,11 +27,21 @@ class load_content:
             next_image.attrs['alt'] = '#'
             next_image.attrs['class'] = 'retrieved-photos'
             next_image.attrs['src'] = "/static/happy-images/" + str(image)
-            content_block.append(next_image)
-        html_doc.close()
+            new_images.append(next_image)
+
+    def generate_html(self):
+        html_doc = open(self.html_file, "r+")
+        soup = BeautifulSoup(html_doc, 'html5lib')
+        div_happy_images = soup.find('div', {'class' : 'row'})
+        content_block = div_happy_images.find_next()
+        iterable_images = list(set(new_images) - set(current_images))
+        for image in iterable_images:
+            content_block.append(image)
         html = soup.prettify('utf-8')
         with open(self.html_file, "wb") as hf:
             hf.write(html)
 
 x = load_content('templates/main.html')
-x.load_images()
+x.load_current_images()
+x.load_new_images()
+x.generate_html()
