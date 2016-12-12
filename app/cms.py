@@ -11,7 +11,7 @@ class load_content:
         soup = BeautifulSoup(html_doc, "html5lib")
         div_happy_images = soup.find('div', {'class' : 'row'})
         content_block = div_happy_images.find_next()
-        images = os.listdir("app/static/happy-images")
+        images = os.listdir("static/happy-images")
         for image in images:
             next_image = soup.new_tag('img')
             next_image.attrs['alt'] = '#'
@@ -23,5 +23,5 @@ class load_content:
         with open(self.html_file, "wb") as hf:
             hf.write(html)
 
-x = load_content('app/templates/main.html')
+x = load_content('templates/main.html')
 x.load_images()
