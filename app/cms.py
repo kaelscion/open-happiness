@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 from datetime import datetime
 import os
+import glob
 
 current_images = []
 new_images = []
@@ -21,12 +22,13 @@ class load_content:
         soup = BeautifulSoup(html_doc, "html5lib")
         div_happy_images = soup.find('div', {'class' : 'row'})
         content_block = div_happy_images.find_next()
-        images = os.listdir("static/happy-images")
+        latest_dir = max(glob.glob(os.path.join('static/happy-images', '*/')),  key=os.path.getmtime)
+        images = os.listdir(latest_dir)
         for image in images:
             next_image = soup.new_tag('img')
             next_image.attrs['alt'] = '#'
             next_image.attrs['class'] = 'retrieved-photos'
-            next_image.attrs['src'] = "/static/happy-images/" + str(image)
+            next_image.attrs['src'] = '%s%s' % (latest_dir, image)
             new_images.append(next_image)
 
     def generate_html(self):
