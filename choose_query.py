@@ -40,8 +40,3 @@ class data_miner:
                 req = requests.get(item, stream=True)
                 shutil.copyfileobj(req.raw, out_file)
                 number += 1
-
-x = data_miner('http://www.google.com/images')
-x.get_query()
-x.get_links(x.query)
-x.download_files(x.query)
