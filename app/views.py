@@ -6,9 +6,15 @@ import re
 def home():
     return render_template('main.html')
 
-@app.route('/addstuff')
+@app.route('/addstuff', methods=['GET', 'POST'])
 def add_stuff():
-    return render_template('add_items.html')
+    from app import db, models
+    adj_query = models.Adjectives.query.all()
+    pos_query = models.Positive.query.all()
+    return render_template('add_items.html',
+                            adjectives = adj_query,
+                            positives = pos_query)
+
 
 @app.route('/dbAdd', methods=['GET', 'POST'])
 def dbAdd():
@@ -25,4 +31,5 @@ def dbAdd():
         p = models.Positive(category=item)
         db.session.add(p)
     db.session.commit()
-    return "Database updated successfully!"
+    flash("Database updated successfully!")
+    return render_template('add_items.html')

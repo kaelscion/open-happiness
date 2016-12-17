@@ -18,19 +18,35 @@
                  <form class="formAdd" action="dbAdd" method="POST" role="form">
                     <h2>Add Items to the Database</h2>
                     <label>Adjectives to Add</label>
-                    <textarea placeholder="Type any words you want to add to the 'adjectives'
-                                           table seperated by commas" name="adjAdd"></textarea>
+                    <textarea placeholder="Type any words you want to add to the 'adjectives' table seperated by commas" name="adjAdd"></textarea>
                     <label>Positive Things</label>
-                    <textarea placeholder="Enter in positive words to add to the database
-                                           eg. 'Puppies', 'Bunnies', 'Pineapples'" name="posAdd"></textarea>
+                    <textarea placeholder="Enter in positive words to add to the database eg. 'Puppies', 'Bunnies', 'Pineapples'" name="posAdd"></textarea>
                     <button id="submitButton"><b>Submit</b></button>
                  </form>
-                 <form class="formCurrent" action="dbDisplay" method="GET" role="form">
-                   <h2>Items Currently Available for Query</h2>
-                   <label>Adjectives in Database</label>
-                   <textarea name="adjCurrent"></textarea>
-                   <label>Positive Things in Database</label>
-                   <textarea name="posCurrent"></textarea>
+                 <div class="large-12 columns">
+                  <h2>Items Currently Available for Query</h2>
+                  <div class="row">
+                    <h4>Adjectives in Database</h4>
+                        <ul name="adjectives">
+                          {% for adj in adjectives %}
+                          <li>
+                          {{ adj.adjective}}
+                          </li>
+                        {% endfor %}
+                        </ul>
+                      </div>
+                    </div>
+                  <div class="row">
+                   <h4>Positive Items in Database</h4>
+                       <ul name="positives">
+                         {% for pos in positives %}
+                         <li>
+                         {{ pos.category}}
+                        </li>
+                       {% endfor %}
+                      </ul>
+                   </div>
+                </div>
              </div>
          </div>
      </div>
