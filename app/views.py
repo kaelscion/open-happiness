@@ -21,15 +21,17 @@ def dbAdd():
     from app import db, models
 
     adj = request.form['adjAdd']
-    split_adj = re.split('(?<!\d)[,.](?!\d)', adj)
-    for item in split_adj:
-        a = models.Adjectives(adjective=item)
-        db.session.add(a)
+    if adj is not None:
+        split_adj = re.split('(?<!\d)[,.](?!\d)', adj)
+        for item in split_adj:
+            a = models.Adjectives(adjective=item)
+            db.session.add(a)
     pos = request.form['posAdd']
-    split_pos = re.split('(?<!\d)[,.](?!\d)', pos)
-    for item in split_pos:
-        p = models.Positive(category=item)
-        db.session.add(p)
-    db.session.commit()
+    if pos is not None:
+        split_pos = re.split('(?<!\d)[,.](?!\d)', pos)
+        for item in split_pos:
+            p = models.Positive(category=item)
+            db.session.add(p)
+        db.session.commit()
     flash("Database updated successfully!")
-    return render_template('add_items.html')
+    return add_stuff()
